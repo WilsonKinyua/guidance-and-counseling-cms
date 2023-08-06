@@ -13,6 +13,9 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/{id}/messages', 'HomeController@userMessages')->name('user.messages');
+    Route::post('/store-message', 'HomeController@storeMessage')->name('store.message');
+    
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
@@ -29,12 +32,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Audit Logs
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
-
-    // Message
-    Route::delete('messages/destroy', 'MessageController@massDestroy')->name('messages.massDestroy');
-    Route::post('messages/media', 'MessageController@storeMedia')->name('messages.storeMedia');
-    Route::post('messages/ckmedia', 'MessageController@storeCKEditorImages')->name('messages.storeCKEditorImages');
-    Route::resource('messages', 'MessageController');
 });
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
     // Change password

@@ -152,13 +152,9 @@ table.dataTable thead .sorting_desc {
     background-color: #f2f2f2;
 }
 
-.chat .chat-body {
-    height: 88vh;
+.chat-body {
+    height: 68vh;
     overflow: hidden;
     overflow-y: auto;
     margin: 20px;
-}
-
-.chat .message-form {
-    height: 10vh;
 }

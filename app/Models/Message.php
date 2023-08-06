@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\MultiTenantModelTrait;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +11,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Message extends Model implements HasMedia
 {
-    use MultiTenantModelTrait, InteractsWithMedia, HasFactory;
+    use InteractsWithMedia, HasFactory;
 
     public $table = 'messages';
 
@@ -29,7 +28,6 @@ class Message extends Model implements HasMedia
         'created_at',
         'updated_at',
         'deleted_at',
-        'created_by_id',
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -51,10 +49,5 @@ class Message extends Model implements HasMedia
     public function receiver()
     {
         return $this->belongsTo(User::class, 'receiver_id');
-    }
-
-    public function created_by()
-    {
-        return $this->belongsTo(User::class, 'created_by_id');
     }
 }

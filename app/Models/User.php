@@ -70,12 +70,17 @@ class User extends Authenticatable implements HasMedia
         return $this->roles()->where('id', 1)->exists();
     }
 
+    public function getIsCounsellorAttribute()
+    {
+        return $this->roles()->where('id', 3)->exists();
+    }
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
         self::created(function (self $user) {
             $registrationRole = config('panel.registration_default_role');
-            if (! $user->roles()->get()->contains($registrationRole)) {
+            if (!$user->roles()->get()->contains($registrationRole)) {
                 $user->roles()->attach($registrationRole);
             }
         });
@@ -87,17 +92,17 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    // public function getAvatarAttribute()
-    // {
-    //     $file = $this->getMedia('avatar')->last();
-    //     if ($file) {
-    //         $file->url       = $file->getUrl();
-    //         $file->thumbnail = $file->getUrl('thumb');
-    //         $file->preview   = $file->getUrl('preview');
-    //     }
+    public function getAvatarAttribute()
+    {
+        // $file = $this->getMedia('avatar')->last();
+        // if ($file) {
+        //     $file->url       = $file->getUrl();
+        //     $file->thumbnail = $file->getUrl('thumb');
+        //     $file->preview   = $file->getUrl('preview');
+        // }
 
-    //     return $file;
-    // }
+        // return $file;
+    }
 
     public function getEmailVerifiedAtAttribute($value)
     {
